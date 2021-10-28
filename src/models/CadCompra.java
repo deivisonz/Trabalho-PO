@@ -26,9 +26,9 @@ public class CadCompra implements Ordenacao, Vetor {
 	    }
 
 	    @Override
-	    public void insercaoDireta() {
-
-	        int i, j;
+	    public void insercaoDireta() {	
+	        
+	    	int i, j;
 	        int qtdElementos = vetCompra.size();
 	        Compra temp;
 	        for (i = 1; i < qtdElementos; i++) {
@@ -45,7 +45,7 @@ public class CadCompra implements Ordenacao, Vetor {
 	                }
 	            }
 	            this.vetCompra.add(j + 1, temp);
-	        }
+	        }	      
 
 	    }
 

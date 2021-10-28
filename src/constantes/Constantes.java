@@ -8,7 +8,7 @@ public class Constantes {
 	
 	//localização-destino de pastas dos arquivos
 	public static final String CAMINHO_TESTE = "src\\arquivos\\";
-	public static final String CAMINHO_PROCESSADO = "src\\arquivos\\processado";
+	public static final String CAMINHO_PROCESSADO = "src\\arquivos\\processado\\";
 	public static final String CAMINHO_RELATORIO = "src\\relatorio\\";
 	
 	//escolhas menu principal

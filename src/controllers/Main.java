@@ -9,6 +9,7 @@ import static constantes.Constantes.TODOS;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.Scanner;
 
 import constantes.Constantes;
@@ -62,7 +63,7 @@ public class Main {
     	switch (escolha) {    			 
 	        case TODOS:
 		       	compras.insercaoDireta();
-		       //	compras.quickSort();  
+		        compras.quickSort();  
 		       	compras.shellSort();
 		       	compras.quickComInsercao(0, compras.getVetCompra().size() - 1);
 		        break;
@@ -85,9 +86,10 @@ public class Main {
     }
  
     private static void ordernar(int escolha) throws FileNotFoundException {                    
-    	tempoInicial = System.currentTimeMillis();
+    	System.out.println("\nMÉTODO: " + getDescricaoOrdenacao(escolha));
     	for (int i = 0; i < Constantes.NOME_ARQUIVO.length; i++) {
         	for (int j = 0; j < Constantes.TIPO_ARQUIVO.length; j++) {
+        		tempoInicial = System.currentTimeMillis();
         		
         		String caminho = Constantes.CAMINHO_TESTE + "compra" + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + ".txt";           		      		
         		CadCompra compras = lerArquivo(caminho);        		
@@ -96,11 +98,12 @@ public class Main {
         		if (compras.getVetCompra() != null) {
         			caseOrdenar(compras, escolha);         			    			
                 	gravarConta(compras, caminhoProcessado);          
-                }       		
+                }     
+        		tempoFinal = System.currentTimeMillis();
+        		System.out.print(" -> Arquivo: " + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + ".txt");
+        		System.out.print(" [Tempo decorido : " + (tempoFinal - tempoInicial) + " ms]\n");
         	}         	
-        }
-    	tempoFinal = System.currentTimeMillis();
-		System.out.println("\n\tTempo decorido : "+ (tempoFinal - tempoInicial) + " milissegundos");
+        }    	
     }
           
     
@@ -112,8 +115,18 @@ public class Main {
             }
             saida.fechar();
         } catch (IOException e) {
-        	System.out.println("ERRO" + e.getMessage());
+        	System.out.println("ERRO " + e.getMessage());
         }
+    }
+    
+    private static String getDescricaoOrdenacao(int escolha) {
+    	switch (escolha) {    			         
+	        case INSERCAO: return "INSERÇÃO";
+	        case QUICKSORT: return "QUICKSORT"; 
+	        case SHELLSORT: return "SHELLSORT"; 
+	        case QUICKSORT_COM_INSERCAO: return "QUICKSORT COM INSERÇÃO";  
+	        default: throw new InvalidParameterException("ERRO: Opção informada inválida");
+    	}
     }
     
 }
