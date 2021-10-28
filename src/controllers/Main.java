@@ -28,6 +28,7 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
 
         int escolha = 0;
+        int iteracoes = 0;
         do {
             System.out.print(
                       "|-----------------------------------------------------|\n"
@@ -45,9 +46,13 @@ public class Main {
             System.out.print("Escolha uma opção: ");
             escolha = scan.nextInt();
             System.out.println("--------------------------");
-
-            ordernar(escolha);
-        } while (escolha >= TODOS && escolha <= SAIR);
+            
+            System.out.print("Digite a Quantidade de Iterações a serem Realizadas: ");
+            iteracoes = scan.nextInt();
+            System.out.println("--------------------------");
+            
+            ordernar(escolha, iteracoes);
+        } while (escolha >= TODOS && escolha <= SAIR && iteracoes > 0);
 
     }
     
@@ -63,21 +68,21 @@ public class Main {
     	switch (escolha) {    			 
 	        case TODOS:
 		       	compras.insercaoDireta();
-		        compras.quickSort();  
+		        compras.quickSort(0, compras.getVetCompra().size() -1);  
 		       	compras.shellSort();
-		       	compras.quickComInsercao(0, compras.getVetCompra().size() - 1);
+		       	//compras.quickComInsercao(0, compras.getVetCompra().size() - 1);
 		        break;
 	        case INSERCAO:
 	       	compras.insercaoDireta();               	
 	       		break;
 	        case QUICKSORT:
-	       	 	compras.quickSort();  
+	       	 	compras.quickSort(0, compras.getVetCompra().size() -1);  
 	       	 	break;
 	        case SHELLSORT:
 	       	 	compras.shellSort();  
 	       	 	break;
 	        case QUICKSORT_COM_INSERCAO:
-	        	compras.quickComInsercao(0, compras.getVetCompra().size() - 1);  
+	        	//compras.quickComInsercao(0, compras.getVetCompra().size() - 1);  
 	        	break;
 	        case SAIR:
 	            System.out.println("Encerrando...");
@@ -85,23 +90,28 @@ public class Main {
     	}  
     }
  
-    private static void ordernar(int escolha) throws FileNotFoundException {                    
+    private static void ordernar(int escolha, int iteracoes) throws FileNotFoundException {                    
     	System.out.println("\nMÉTODO: " + getDescricaoOrdenacao(escolha));
     	for (int i = 0; i < Constantes.NOME_ARQUIVO.length; i++) {
         	for (int j = 0; j < Constantes.TIPO_ARQUIVO.length; j++) {
+        		
         		tempoInicial = System.currentTimeMillis();
         		
-        		String caminho = Constantes.CAMINHO_TESTE + "compra" + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + ".txt";           		      		
-        		CadCompra compras = lerArquivo(caminho);        		
+        		for (int k = 0; k < iteracoes; k++) {   					        		
+	        		String caminho = Constantes.CAMINHO_TESTE + "compra" + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + ".txt";           		      		
+	        		CadCompra compras = lerArquivo(caminho);        		
+	        		
+	        		String caminhoProcessado = Constantes.CAMINHO_PROCESSADO + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + ".txt";        		
+	        		if (compras.getVetCompra() != null) {
+	        			caseOrdenar(compras, escolha);         			    			
+	                	gravarConta(compras, caminhoProcessado);          
+	                }     	        		
+        		} 
         		
-        		String caminhoProcessado = Constantes.CAMINHO_PROCESSADO + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + ".txt";        		
-        		if (compras.getVetCompra() != null) {
-        			caseOrdenar(compras, escolha);         			    			
-                	gravarConta(compras, caminhoProcessado);          
-                }     
         		tempoFinal = System.currentTimeMillis();
         		System.out.print(" -> Arquivo: " + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + ".txt");
-        		System.out.print(" [Tempo decorido : " + (tempoFinal - tempoInicial) + " ms]\n");
+        		System.out.print(" [Tempo médio decorido : " + (tempoFinal - tempoInicial) / iteracoes + " ms]\n");
+        		
         	}         	
         }    	
     }
