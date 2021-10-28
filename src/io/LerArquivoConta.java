@@ -1,7 +1,16 @@
 package io;
 
-import java.io.*;
-import java.util.*;
+import static constantes.Constantes.DADOS_CLIENTE_ESPECIAL;
+import static constantes.Constantes.DATA_CLIENTE_ESPECIAL;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
+import constantes.Constantes;
 import models.Cliente;
 import models.ClienteEspecial;
 import models.Compra;
@@ -63,31 +72,20 @@ public class LerArquivoConta {
 	        
 	        try {
 	            dados = linha.split(";");
-
-	            if (dados.length == 5) {
-
-	               // String atr = dados[2].replaceAll(".", "").replace(',', '.');
-	                double atr2 = Double.parseDouble(dados[2]);
-	                Cliente clienteEspecial = new ClienteEspecial(atr2, dados[0], dados[1]);
-
-	                Calendar data = dividirData(dados[3]);
+	            if (dados.length == DADOS_CLIENTE_ESPECIAL) {                
+	            	double valeCompra = Double.parseDouble(dados[Constantes.VALE_COMPRA_CLIENTE_ESPECIAL]);
+	                Cliente clienteEspecial = new ClienteEspecial(valeCompra, dados[Constantes.NOME_CLIENTE], dados[Constantes.CPF_CLIENTE]);
 	                
-	                //String valor = dados[4].replaceAll(".", "").replace(',', '.');
-	                double valorDouble = Double.parseDouble(dados[4]);
+	                Calendar data = dividirData(dados[DATA_CLIENTE_ESPECIAL]);                
+	                double valorDouble = Double.parseDouble(dados[Constantes.VALOR_CLIENTE_ESPECIAL]);
 	                
-	                return (new Compra(clienteEspecial, data, valorDouble));
+	                return (new Compra(clienteEspecial, data, valorDouble));	                
+	            } else {	               
+	                Cliente cliente = new Cliente(dados[Constantes.NOME_CLIENTE], dados[Constantes.CPF_CLIENTE]);
+	                Calendar data = dividirData(dados[Constantes.DATA_CLIENTE]);                
+	                double valorDouble = Double.parseDouble(dados[Constantes.VALOR_CLIENTE]);                
 	                
-	            } else {
-	                
-	                Cliente cliente = new Cliente(dados[0], dados[1]);
-
-	                Calendar data = dividirData(dados[2]);
-	                
-	               // String valor = dados[3].replaceAll(".", "").replace(',', '.');
-	                double valorDouble = Double.parseDouble(dados[3]);
-	                
-	                return (new Compra(cliente, data, valorDouble));
-	                
+	                return (new Compra(cliente, data, valorDouble));               
 	            }
 
 	        } catch (ArrayIndexOutOfBoundsException erro) {
@@ -104,9 +102,9 @@ public class LerArquivoConta {
 
 	        String[] dataCalendar = dados.split("/");
 
-	        dia = Integer.parseInt(dataCalendar[0]);
-	        mes = Integer.parseInt(dataCalendar[1]) - 1;
-	        ano = Integer.parseInt(dataCalendar[2]);
+	        dia = Integer.parseInt(dataCalendar[Constantes.DIA]);
+	        mes = Integer.parseInt(dataCalendar[Constantes.MES]) - 1;
+	        ano = Integer.parseInt(dataCalendar[Constantes.ANO]);
 	        data.set(ano, mes, dia);
 	        return data;
 	    }

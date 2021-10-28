@@ -19,4 +19,23 @@ public class Constantes {
 	public static final int QUICKSORT_COM_INSERCAO = 5;
 	public static final int SAIR = 6;
 	
+	//Posicao informação nos arquivo de texto	
+	public static final int NOME_CLIENTE = 0;
+	public static final int CPF_CLIENTE = 1;
+	public static final int DATA_CLIENTE = 2;
+	public static final int VALOR_CLIENTE = 3;
+	
+	//Informações nos arquivos sobre Clientes Especiais
+	public static final int DADOS_CLIENTE_ESPECIAL = 5;
+	public static final int VALE_COMPRA_CLIENTE_ESPECIAL = 2;
+	public static final int DATA_CLIENTE_ESPECIAL = 3;
+	public static final int VALOR_CLIENTE_ESPECIAL = 4;
+	
+	//info posição datas
+	public static final int DIA = 0;
+	public static final int MES = 1;
+	public static final int ANO = 2;
+	
+	
+
 }

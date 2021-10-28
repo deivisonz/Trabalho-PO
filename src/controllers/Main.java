@@ -51,7 +51,14 @@ public class Main {
             iteracoes = scan.nextInt();
             System.out.println("--------------------------");
             
-            ordernar(escolha, iteracoes);
+            if (escolha == TODOS) {
+            	ordernar(INSERCAO, iteracoes);
+            	ordernar(QUICKSORT, iteracoes);
+            	ordernar(SHELLSORT, iteracoes);
+            	ordernar(QUICKSORT_COM_INSERCAO, iteracoes);
+            } else {
+            	ordernar(escolha, iteracoes);
+            }           
         } while (escolha >= TODOS && escolha <= SAIR && iteracoes > 0);
 
     }
@@ -66,12 +73,6 @@ public class Main {
     
     private static void caseOrdenar(CadCompra compras, int escolha) {
     	switch (escolha) {    			 
-	        case TODOS:
-		       	compras.insercaoDireta();
-		        compras.quickSort(0, compras.getVetCompra().size() -1);  
-		       	compras.shellSort();
-		       	//compras.quickComInsercao(0, compras.getVetCompra().size() - 1);
-		        break;
 	        case INSERCAO:
 	       	compras.insercaoDireta();               	
 	       		break;
@@ -82,7 +83,7 @@ public class Main {
 	       	 	compras.shellSort();  
 	       	 	break;
 	        case QUICKSORT_COM_INSERCAO:
-	        	//compras.quickComInsercao(0, compras.getVetCompra().size() - 1);  
+	        	compras.quickComInsercao(0, compras.getVetCompra().size() - 1);  
 	        	break;
 	        case SAIR:
 	            System.out.println("Encerrando...");
@@ -91,7 +92,7 @@ public class Main {
     }
  
     private static void ordernar(int escolha, int iteracoes) throws FileNotFoundException {                    
-    	System.out.println("\nMÉTODO: " + getDescricaoOrdenacao(escolha));
+    	System.out.println("\nMÉTODO: " + getDescricaoOrdenacao(escolha, false));
     	for (int i = 0; i < Constantes.NOME_ARQUIVO.length; i++) {
         	for (int j = 0; j < Constantes.TIPO_ARQUIVO.length; j++) {
         		
@@ -101,7 +102,7 @@ public class Main {
 	        		String caminho = Constantes.CAMINHO_TESTE + "compra" + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + ".txt";           		      		
 	        		CadCompra compras = lerArquivo(caminho);        		
 	        		
-	        		String caminhoProcessado = Constantes.CAMINHO_PROCESSADO + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + ".txt";        		
+	        		String caminhoProcessado = Constantes.CAMINHO_PROCESSADO + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + getDescricaoOrdenacao(escolha, true) + ".txt";        		
 	        		if (compras.getVetCompra() != null) {
 	        			caseOrdenar(compras, escolha);         			    			
 	                	gravarConta(compras, caminhoProcessado);          
@@ -129,12 +130,12 @@ public class Main {
         }
     }
     
-    private static String getDescricaoOrdenacao(int escolha) {
+    private static String getDescricaoOrdenacao(int escolha, boolean abreviado) {
     	switch (escolha) {    			         
-	        case INSERCAO: return "INSERÇÃO";
-	        case QUICKSORT: return "QUICKSORT"; 
-	        case SHELLSORT: return "SHELLSORT"; 
-	        case QUICKSORT_COM_INSERCAO: return "QUICKSORT COM INSERÇÃO";  
+	        case INSERCAO: return abreviado ? "-InsDir" : "INSERÇÃO";
+	        case QUICKSORT: return abreviado ? "-Quick" : "QUICKSORT"; 
+	        case SHELLSORT: return abreviado ? "-Shell" : "SHELLSORT"; 
+	        case QUICKSORT_COM_INSERCAO: return abreviado ? "-QuickIns" : "QUICKSORT COM INSERÇÃO";  
 	        default: throw new InvalidParameterException("ERRO: Opção informada inválida");
     	}
     }
