@@ -42,38 +42,40 @@ public class CadCompra implements Ordenacao, Vetor {
 	    }
 
 	    @Override
-	    public void quickSort(int inicio, int fim) {
-	    	if (inicio < fim) {
-	    		int posicaoPivo = separar(inicio, fim);
-                quickSort(inicio, posicaoPivo - 1);
-                quickSort(posicaoPivo + 1, fim);
-	    	}
+	    public void quickSort() {
+	    	ordenar(0, this.getVetCompra().size() -1);	   
 	    }
 	    
-	    private int separar(int inicio, int fim) {
-	    	Compra pivo = this.vetCompra.get(inicio);
-	    		    	
-            int i = inicio + 1, f = fim;
-            while (i <= f) {
-               if (compararCpfOuData(i, pivo) <= 0) {
-            	   i++;
-               } else if (compararCpfOuData(pivo, f) < 0) {
-            	   f--;
-               } else {
-            	   Compra troca = this.vetCompra.get(i);
-                   this.vetCompra.set(i, this.get(f));
-                   this.vetCompra.set(f, troca);
-                   i++;
-                   f--;
-               }
-            }
-            
-            this.vetCompra.set(inicio, this.vetCompra.get(f));
-            this.vetCompra.set(f, pivo);
-             
-            return f;
-            
-      }
+	    private void ordenar(int esq, int dir) {		
+	    	int i = esq, j = dir;
+	    	
+	    	Compra pivo, temp;
+			pivo = this.getVetCompra().get((i+j)/2);
+			do {
+				while (compararCpfOuData(i, pivo) < 0) {
+					i++;
+				}
+				
+				while (compararCpfOuData(j, pivo) > 0) {
+					j--;
+				}
+				
+				if (i <= j) {
+					temp = this.getVetCompra().get(i);
+					this.vetCompra.set(i, this.getVetCompra().get(j));
+					this.vetCompra.set(j, temp);				
+					i++;
+					j--;
+				}			
+			} while (i <= j);
+			
+			if (esq < j) 
+				ordenar(esq, j);
+			
+			if (dir > i) 
+				ordenar(i, dir);
+	    }
+
 	    
 		@Override
 		public void shellSort() {	        
@@ -102,45 +104,6 @@ public class CadCompra implements Ordenacao, Vetor {
 	    
     	}
 
-		//VALIDAR
-	    private void ordena(int esq, int dir) {	        
-	    	String pivo;
-	        int i = esq, j = dir;
-	        Compra temp;
-
-	        pivo = this.vetCompra.get(i + j / 2).getCliente().getCpf();
-	        
-	        do {
-	            while (this.vetCompra.get(i).getCliente().getCpf().compareTo(pivo) < 0) {
-	                i++;
-	            }
-	            while (this.vetCompra.get(j).getCliente().getCpf().compareTo(pivo) > 0) {
-	                j--;
-	            }
-	            if ((j >= 0) && (this.vetCompra.get(j).getCliente().getCpf().compareTo(pivo)) == 0) {
-	                if ((j >= 0) &&
-	                        (this.vetCompra.get(j).getData().compareTo(this.vetCompra.get(i + j / 2).getData())) > 0) {
-	                    this.vetCompra.add(j + 1, this.vetCompra.get(j--));
-	                }
-	            }
-	            
-	            if (i <= j) {
-	                temp = this.vetCompra.get(i);
-	                this.vetCompra.add(i, this.vetCompra.get(j));
-	                this.vetCompra.add(j, temp);
-	                i++;
-	                j--;
-	            }
-	        } while (i <= j);
-	        if (esq < j) {
-	            ordena(esq, j);
-	        }
-	        if (dir > i) {
-	            ordena(i, dir);
-	        }
-	    }
-
-	    //VALIDAR
 	    @Override
 	    public void quickComInsercao(int esq, int dir) {//se for menor do que 40, ou j, ele chama o inserção direta quick	       
 	    	String pivo;
@@ -148,7 +111,7 @@ public class CadCompra implements Ordenacao, Vetor {
 	        Compra temp;
 
 	        pivo = this.vetCompra.get(i + j / 2).getCliente().getCpf();
-	        do {
+	        do { 
 	            while (this.vetCompra.get(i).getCliente().getCpf().compareTo(pivo) == -1) {
 	                i++;
 	            }
@@ -164,14 +127,13 @@ public class CadCompra implements Ordenacao, Vetor {
 	            }
 	        } while (i <= j);
 	        if (esq < j) {
-	            ordena(esq, j);
+	            ordenar(esq, j);
 	        }
 	        if (dir > i) {
-	            ordena(i, dir);
+	            ordenar(i, dir);
 	        }
 	    }
 	    
-	    //VALIDAR
 	    public void insercaoDiretaQuick(int ini, int fim) {	        
 	    	int i, j;
 	        Compra temp;
@@ -179,13 +141,12 @@ public class CadCompra implements Ordenacao, Vetor {
 	            temp = this.vetCompra.get(i);
 	            j = i - 1;
 
-	            while ((j >= 0)
-	                    && (this.vetCompra.get(j).getCliente().getCpf().compareTo(temp.getCliente().getCpf())) > 0) {
+	            while ((j >= 0) && compararCpfOuData(j, temp) > 0) { 
 	                this.vetCompra.add(j + 1, this.vetCompra.get(j--));
 
 	            }
-	            if ((j >= 0) && (this.vetCompra.get(j).getCliente().getCpf().compareTo(temp.getCliente().getCpf())) == 0) {
-	                if ((j >= 0) && (this.vetCompra.get(j).getData().compareTo(temp.getData())) > 0) {
+	            if ((j >= 0) && compararCpfOuData(j, temp) == 0) {
+	                if ((j >= 0) && compararCpfOuData(j, temp) > 0) {
 	                    this.vetCompra.add(j + 1, this.vetCompra.get(j--));
 	                }
 	            }

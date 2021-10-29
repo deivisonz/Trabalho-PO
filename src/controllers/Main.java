@@ -77,13 +77,13 @@ public class Main {
 	       	compras.insercaoDireta();               	
 	       		break;
 	        case QUICKSORT:
-	       	 	compras.quickSort(0, compras.getVetCompra().size() -1);  
+	       	 	compras.quickSort();  
 	       	 	break;
 	        case SHELLSORT:
 	       	 	compras.shellSort();  
 	       	 	break;
 	        case QUICKSORT_COM_INSERCAO:
-	        	compras.quickComInsercao(0, compras.getVetCompra().size() - 1);  
+	        	compras.quickComInsercao(0, compras.getVetCompra().size() -1);  
 	        	break;
 	        case SAIR:
 	            System.out.println("Encerrando...");
