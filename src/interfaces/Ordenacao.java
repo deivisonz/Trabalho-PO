@@ -6,7 +6,7 @@ public interface Ordenacao {
     
     public void quickSort();
     
-    public void quickComInsercao(int esq, int dir);
+    public void quickComInsercao();
     
     public void shellSort();
     
