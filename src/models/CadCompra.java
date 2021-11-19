@@ -105,55 +105,61 @@ public class CadCompra implements Ordenacao, Vetor {
     	}
 
 	    @Override
-	    public void quickComInsercao(int esq, int dir) {//se for menor do que 40, ou j, ele chama o inserção direta quick	       
-	    	String pivo;
-	        int i = esq, j = dir;
-	        Compra temp;
+    public void quickComInsercao() {
+        ordenarQuick(0, this.vetCompra.size() - 1);
 
-	        pivo = this.vetCompra.get(i + j / 2).getCliente().getCpf();
-	        do { 
-	            while (this.vetCompra.get(i).getCliente().getCpf().compareTo(pivo) == -1) {
-	                i++;
-	            }
-	            while (this.vetCompra.get(j).getCliente().getCpf().compareTo(pivo) == 1) {
-	                j--;
-	            }
-	            if (i <= j) {
-	                temp = this.vetCompra.get(i);
-	                this.vetCompra.add(i, this.vetCompra.get(j));
-	                this.vetCompra.add(j, temp);
-	                i++;
-	                j--;
-	            }
-	        } while (i <= j);
-	        if (esq < j) {
-	            ordenar(esq, j);
-	        }
-	        if (dir > i) {
-	            ordenar(i, dir);
-	        }
-	    }
-	    
-	    public void insercaoDiretaQuick(int ini, int fim) {	        
-	    	int i, j;
-	        Compra temp;
-	        for (i = 1; i < vetCompra.size(); i++) {
-	            temp = this.vetCompra.get(i);
-	            j = i - 1;
+    }
 
-	            while ((j >= 0) && compararCpfOuData(j, temp) > 0) { 
-	                this.vetCompra.add(j + 1, this.vetCompra.get(j--));
+    private void ordenarQuick(int esq, int dir) {
 
-	            }
-	            if ((j >= 0) && compararCpfOuData(j, temp) == 0) {
-	                if ((j >= 0) && compararCpfOuData(j, temp) > 0) {
-	                    this.vetCompra.add(j + 1, this.vetCompra.get(j--));
-	                }
-	            }
-	            this.vetCompra.add(j + 1, temp);
-	        }
-	        
-	    }
+        int i = esq, j = dir;
+        Compra temp, pivo;
+
+        pivo = this.vetCompra.get((i + j) / 2);
+        do {
+            while (compararCpfOuData(i, pivo) < 0) {
+                i++;
+            }
+            while (compararCpfOuData(j, pivo) > 0) {
+                j--;
+            }
+            if (i <= j) {
+                temp = this.vetCompra.get(i);
+                this.vetCompra.set(i, this.vetCompra.get(j));
+                this.vetCompra.set(j, temp);
+                i++;
+                j--;
+            }
+        } while (i <= j);
+        if (esq < j) {
+            if (j - esq <= 20) {
+                insercaoQuick(esq, j);
+            } else {
+                ordenarQuick(esq, j);
+            }
+        }
+        if (dir > i) {
+            if (dir - i <= 20) {
+                insercaoQuick(i, dir);
+            } else {
+                ordenarQuick(i, dir);
+            }
+        }
+
+    }
+    
+    public void insercaoQuick(int ini, int fim) {
+        int i, j;
+        Compra temp;
+        for (j = ini; j <= fim; j++) {
+            temp = this.vetCompra.get(j);
+            for (i = j - 1; (i >= 0) && (compararCpfOuData(i, temp) > 0); i--) {
+                this.vetCompra.set(i + 1, this.vetCompra.get(i));
+            }
+            this.vetCompra.set(i + 1, temp);
+        }
+
+    }
 	    	 
 	    @Override
 	    public Compra get(int pos) {
