@@ -1,16 +1,16 @@
-package models;
+package Arvore;
 
 public class Item {
-	private char chave;
+	private int chave;
 	// podem ter outros atributos, de acordo com a sua aplicacao
-	public Item(char chave) {
+	public Item(int chave) {
 		super();
 		this.chave = chave;
 	}
-	public char getChave() {
+	public int getChave() {
 		return chave;
 	}
-	public void setChave(char chave) {
+	public void setChave(int chave) {
 		this.chave = chave;
 	}
 	@Override

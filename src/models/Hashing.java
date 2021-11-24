@@ -1,19 +1,27 @@
-package models;
+package Arvore;
+
+import Entidades.Compra;
 
 public class Hashing {
-
-    public int Hashing(int chave, int M) {
-        return chave / M;
-    }
-
-    public int Hashing(String chave) {
-        char carac;
-        int i, soma = 0;
-        for (i = 0; i < chave.length(); i++) {
-            carac = chave.charAt(i);
-            soma += Character.getNumericValue(carac);
-        }
-        return soma;
-    }
-
+	private Lista[] vetor;
+	
+	public Hashing(int tam) {
+		super();
+		vetor = new Lista[tam];
+		for (int i=0; i<tam; i++) {
+			vetor[i] = new Lista();
+		}
+	}
+	private int hashing (String cpf) {
+		long auxCpf = Long.parseLong(cpf);
+		return (int) (auxCpf%vetor.length);
+		}
+	public void inserir (Compra compra) {
+		int hash = hashing (compra.getCliente().getCpf());
+		vetor[hash].add(compra);
+	}
+	public  Compra pesquisar (String cpf) {
+		int hash = hashing(cpf);
+		return vetor[hash].pesquisa(cpf);
+	}
 }
