@@ -1,6 +1,6 @@
 package Arvore;
 
-import Entidades.Compra;
+import models.Compra;
 
 public class NoAvl {
 

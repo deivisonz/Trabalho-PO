@@ -2,7 +2,7 @@ package Arvore;
 
 import java.util.ArrayList;
 
-import Entidades.Compra;
+import models.Compra;
 
 public class ABB {
 	private NoAbb raiz;
