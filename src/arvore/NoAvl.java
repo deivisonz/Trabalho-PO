@@ -1,17 +1,23 @@
 package Arvore;
 
+import java.util.ArrayList;
+
 import models.Compra;
 
 public class NoAvl {
 
 	private byte fb;
-	private Compra compra;
+	private String CPF;
+	private ArrayList<Compra> lista; 
 	private NoAvl esq, dir;
+	private Compra compra;
 	
 	//Contrutores
 	public NoAvl(Compra compra) {
 		super();
-		this.compra = compra;
+		this.lista = new ArrayList<Compra>();
+		this.lista.add(compra);
+		this.CPF = compra.getCliente().getCpf();
 		this.fb = 0;
 	}
 	
@@ -54,8 +60,18 @@ public class NoAvl {
 		this.dir = dir;
 	}
 	
+	public void insereCompra(Compra compra) {
+		this.lista.add(compra);
+	}
+	
+	public ArrayList<Compra> imprime() {
+		return this.lista;
+		}
+	
 	public String ToString() {
 		return ""+this.compra.getCliente().getCpf();
 	}
+	
+		
 }
 

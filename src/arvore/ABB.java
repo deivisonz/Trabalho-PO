@@ -42,6 +42,7 @@ public class ABB {
 				else if(elem.compareTo(no.getCompra().getCliente().getCpf()) > 0) {
 					no = pesquisar(elem, no.getDir());
 				}
+				no.imprime();
 			return no;
 			}
 	}
@@ -61,9 +62,13 @@ public class ABB {
 		}else {
 			if(compra.getCliente().getCpf().compareTo(no.getCompra().getCliente().getCpf()) > 0) {
 				no.setDir(inserir(compra, no.getDir()));
-			}else {
+			}else if(
+					compra.getCliente().getCpf().compareTo(no.getCompra().getCliente().getCpf()) < 0){
 				no.setEsq(inserir(compra, no.getEsq()));
-			}return no;
+			}else {
+				no.insereCompra(compra);
+			}
+			return no;
 		}
 	}
 	

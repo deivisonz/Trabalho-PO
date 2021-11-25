@@ -1,14 +1,20 @@
 package Arvore;
 
+import java.util.ArrayList;
+
 import models.Compra;
 
 public class NoAbb {
+	private String CPF;
+	private ArrayList<Compra> lista; 
+	private NoAbb esq, dir;
 	private Compra compra;
-	private NoAbb dir, esq;
 
 	public NoAbb(Compra compra) {
 		super();
-		this.compra = compra;
+		this.lista = new ArrayList<Compra>();
+		this.lista.add(compra);
+		this.CPF = compra.getCliente().getCpf();
 	}
 
 	public NoAbb() {
@@ -35,6 +41,18 @@ public class NoAbb {
 	public void setEsq(NoAbb esq) {
 		this.esq = esq;
 	}
+	
+	public void insereCompra(Compra compra) {
+		this.lista.add(compra);
+	}
+	
+	public String imprime() {
+		String resp = "";
+		for(int i = 0; i >= lista.size()-1; i++) {
+			resp += lista.toString()+" | ";
+			}
+		return resp;
+		}
 
 	@Override
 	public String toString() {
