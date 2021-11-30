@@ -1,4 +1,4 @@
-package Arvore;
+package arvore;
 
 import models.Compra;
 import java.util.ArrayList;

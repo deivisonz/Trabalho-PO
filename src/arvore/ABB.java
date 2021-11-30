@@ -1,4 +1,4 @@
-package Arvore;
+package arvore;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ public class ABB {
 	private NoAbb raiz;
 	private int nElem;
 
-	private ABB() {
+	public ABB() {
 		this.nElem = 0;
 	}
 
@@ -35,7 +35,7 @@ public class ABB {
 	private NoAbb pesquisar(String elem, NoAbb no) {
 		if (no == null) {
 			return null;
-			}else {
+			} else {
 				if(elem.compareTo(no.getCompra().getCliente().getCpf()) < 0) {
 					no = pesquisar(elem, no.getEsq());
 					}
@@ -94,7 +94,7 @@ public class ABB {
 		return arv;
 	}
 	
-	private void balancear (ArrayList<NoAbb> vetor, ABB arv, int inicio, int fim) {
+	private void balancear(ArrayList<NoAbb> vetor, ABB arv, int inicio, int fim) {
 		int meio;
 		if (fim >= inicio) {
 			meio = (fim + inicio)/2;

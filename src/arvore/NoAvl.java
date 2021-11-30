@@ -1,4 +1,4 @@
-package Arvore;
+package arvore;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ public class NoAvl {
 	private NoAvl esq, dir;
 	private Compra compra;
 	
-	//Contrutores
+	//Construtores
 	public NoAvl(Compra compra) {
 		super();
 		this.lista = new ArrayList<Compra>();

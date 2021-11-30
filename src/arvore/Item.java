@@ -1,4 +1,4 @@
-package Arvore;
+package arvore;
 
 public class Item {
 	private int chave;

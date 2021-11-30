@@ -1,4 +1,4 @@
-package Arvore;
+package arvore;
 
 import models.Compra;
 
@@ -20,7 +20,7 @@ public class Hashing {
 		int hash = hashing (compra.getCliente().getCpf());
 		vetor[hash].add(compra);
 	}
-	public  Compra pesquisar (String cpf) {
+	public Compra pesquisar (String cpf) {
 		int hash = hashing(cpf);
 		return vetor[hash].pesquisa(cpf);
 	}
