@@ -157,7 +157,7 @@ public class Main {
 	        		
 	        		CadCompra compras = lerArquivo(caminho);        		
 	        		
-	        		String caminhoProcessado = Constantes.CAMINHO_PROCESSADO + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + getDescricaoOrdenacao(escolha, true) + ".txt";        		
+	        		String caminhoProcessado = Constantes.CAMINHO_PROCESSADO + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + getDescricaoArvore(escolha, true) + ".txt";        		
 	        		if (compras.getVetCompra() != null) {
 	        			compras.getVetCompra().forEach(compra -> {
 	        				if (escolha == Constantes.ABB) {
@@ -196,6 +196,7 @@ public class Main {
     	try {
     		List<String> cpfsCompra = Files.readAllLines(Paths.get(Constantes.CAMINHO_TESTE + "compra.txt"));
     		
+    		GravarArquivo saida = new GravarArquivo(caminhoArquivo);
     		cpfsCompra.forEach( cpf -> {
     			Compra compra = null; 					
     			if (escolha == Constantes.ABB) {
@@ -205,13 +206,16 @@ public class Main {
     	    		compra = avl.pesquisar(cpf).getCompra();
     	    	} else if (escolha == Constantes.HASHING) {
     	    		compra = hashing.pesquisar(cpf);
-    	    	}
+    	    	}   
+    			
+    			if (compra == null) {
+    				saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf); 
+    			} else {
+    				saida.gravar(compra.toString() + "\n"); 
+    			}
+    			 			
     		});   		
-    		
-    		GravarArquivo saida = new GravarArquivo(caminhoArquivo);
-            for (Compra c : compras.getVetCompra()) {
-                saida.gravar(c.toStringArquivo(compras.getVetCompra().size()) + "\n");
-            }
+
             saida.fechar();
         } catch (IOException e) {
         	System.out.println("ERRO " + e.getMessage());

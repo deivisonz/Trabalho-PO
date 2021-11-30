@@ -38,8 +38,7 @@ public class ABB {
 			} else {
 				if(elem.compareTo(no.getCompra().getCliente().getCpf()) < 0) {
 					no = pesquisar(elem, no.getEsq());
-					}
-				else if(elem.compareTo(no.getCompra().getCliente().getCpf()) > 0) {
+				} else if(elem.compareTo(no.getCompra().getCliente().getCpf()) > 0) {
 					no = pesquisar(elem, no.getDir());
 				}
 				no.imprime();
