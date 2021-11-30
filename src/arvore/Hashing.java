@@ -12,14 +12,17 @@ public class Hashing {
 			vetor[i] = new Lista();
 		}
 	}
+	
 	private int hashing (String cpf) {
 		long auxCpf = Long.parseLong(cpf);
 		return (int) (auxCpf%vetor.length);
-		}
+	}
+	
 	public void inserir (Compra compra) {
 		int hash = hashing (compra.getCliente().getCpf());
 		vetor[hash].add(compra);
 	}
+	
 	public Compra pesquisar (String cpf) {
 		int hash = hashing(cpf);
 		return vetor[hash].pesquisa(cpf);

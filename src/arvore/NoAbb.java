@@ -46,6 +46,22 @@ public class NoAbb {
 		this.lista.add(compra);
 	}
 	
+	public String getCPF() {
+		return CPF;
+	}
+
+	public void setCPF(String cPF) {
+		CPF = cPF;
+	}
+	
+	public ArrayList<Compra> getLista() {
+		return lista;
+	}
+
+	public void setLista(ArrayList<Compra> lista) {
+		this.lista = lista;
+	}
+
 	public String imprime() {
 		String resp = "";
 		for(int i = 0; i >= lista.size()-1; i++) {

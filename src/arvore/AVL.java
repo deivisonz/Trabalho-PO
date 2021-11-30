@@ -38,9 +38,9 @@ public class AVL {
 		if (no == null) {
 			return null;
 		} else {
-			if (elem.compareTo(no.imprime().get(0).getCliente().getCpf()) < 0) {
+			if (elem.compareTo(no.getCPF()) < 0) {
 				no = pesquisar(elem, no.getEsq());
-			} else if (elem.compareTo(no.imprime().get(0).getCliente().getCpf()) > 0) {
+			} else if (elem.compareTo(no.getCPF()) > 0) {
 				no = pesquisar(elem, no.getDir());
 			}
 			return no;
@@ -60,10 +60,10 @@ public class AVL {
 			this.nElem++;
 			this.h = true;
 			return novo;
-		} else if (compra.getCliente().getCpf().compareTo(no.getCompra().getCliente().getCpf()) < 0) {
+		} else if (compra.getCliente().getCpf().compareTo(no.getCPF()) < 0) {
 			no.setEsq(this.inserir(compra, no.getEsq()));
 			no = this.balancearDir(no);
-		} else if (compra.getCliente().getCpf().compareTo(no.getCompra().getCliente().getCpf()) > 0) {
+		} else if (compra.getCliente().getCpf().compareTo(no.getCPF()) > 0) {
 			no.setDir(this.inserir(compra, no.getDir()));
 			no = this.balancearEsq(no);
 		} else {

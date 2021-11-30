@@ -35,23 +35,25 @@ public class ABB {
 	private NoAbb pesquisar(String elem, NoAbb no) {
 		if (no == null) {
 			return null;
-			} else {
-				if(elem.compareTo(no.getCompra().getCliente().getCpf()) < 0) {
-					no = pesquisar(elem, no.getEsq());
-				} else if(elem.compareTo(no.getCompra().getCliente().getCpf()) > 0) {
-					no = pesquisar(elem, no.getDir());
-				}
-				no.imprime();
-			return no;
+		} else {
+			if(elem.compareTo(no.getCPF()) < 0) {
+				no = pesquisar(elem, no.getEsq());
+			} else if(elem.compareTo(no.getCPF()) > 0) {
+				no = pesquisar(elem, no.getDir());
 			}
+			if (no != null) {
+				no.imprime();
+			}
+			return no;
+		}
 	}
 
 	public void inserir(Compra compra) {
 		NoAbb no = pesquisar(compra.getCliente().getCpf());
 		if(no == null) {
 			this.raiz = inserir(compra, this.raiz);
-			}
 		}
+	}
 
 	private NoAbb inserir(Compra compra, NoAbb no) {
 		if(no == null) {
@@ -59,12 +61,11 @@ public class ABB {
 			this.nElem++;
 			return novo;
 		}else {
-			if(compra.getCliente().getCpf().compareTo(no.getCompra().getCliente().getCpf()) > 0) {
+			if(compra.getCliente().getCpf().compareTo(no.getCPF()) > 0) {
 				no.setDir(inserir(compra, no.getDir()));
-			}else if(
-					compra.getCliente().getCpf().compareTo(no.getCompra().getCliente().getCpf()) < 0){
+			} else if(compra.getCliente().getCpf().compareTo(no.getCPF()) < 0) {
 				no.setEsq(inserir(compra, no.getEsq()));
-			}else {
+			} else {
 				no.insereCompra(compra);
 			}
 			return no;

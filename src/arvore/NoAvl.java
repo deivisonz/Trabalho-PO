@@ -63,10 +63,18 @@ public class NoAvl {
 	public void insereCompra(Compra compra) {
 		this.lista.add(compra);
 	}
-	
+		
+	public String getCPF() {
+		return CPF;
+	}
+
+	public void setCPF(String cPF) {
+		CPF = cPF;
+	}
+
 	public ArrayList<Compra> imprime() {
 		return this.lista;
-		}
+	}
 	
 	public String ToString() {
 		return ""+this.compra.getCliente().getCpf();
