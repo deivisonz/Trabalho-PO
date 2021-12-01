@@ -12,14 +12,10 @@ public class NoAbb {
 
 	public NoAbb(Compra compra) {
 		super();
+		this.compra = compra;
 		this.lista = new ArrayList<Compra>();
 		this.lista.add(compra);
 		this.CPF = compra.getCliente().getCpf();
-	}
-
-	public NoAbb() {
-		super();
-		this.compra = null;
 	}
 
 	public Compra getCompra() {
@@ -60,14 +56,6 @@ public class NoAbb {
 
 	public void setLista(ArrayList<Compra> lista) {
 		this.lista = lista;
-	}
-
-	public String imprime() {
-		String resp = "";
-		for(int i = 0; i >= lista.size()-1; i++) {
-			resp += lista.toString()+" | ";
-			}
-		return resp;
 	}
 
 	@Override

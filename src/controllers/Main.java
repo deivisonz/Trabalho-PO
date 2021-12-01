@@ -151,16 +151,15 @@ public class Main {
         		tempoInicial = System.currentTimeMillis();
         		for (int k = 0; k < iteracoes; k++) {         			      		
         			String caminho = Constantes.CAMINHO_TESTE + "compra" + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + ".txt";           		      			        		
-	        		
+        			
+        			CadCompra compras = lerArquivo(caminho);       
+        			
         			ABB abb = new ABB();
 	            	AVL avl = new AVL();
-	            	Hashing hashing = new Hashing(55001);
-	        		
-	        		CadCompra compras = lerArquivo(caminho);        		
+	            	Hashing hashing = new Hashing(numeroPrimo(compras.getVetCompra().size()));
 	        		
 	        		String caminhoProcessado = Constantes.CAMINHO_PROCESSADO + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + getDescricaoArvore(escolha, true) + ".txt";        		
 	        		if (compras.getVetCompra() != null) {
-	        			int count = 0;
 	        			for (Compra compra : compras.getVetCompra()) {
 	        				if (escolha == Constantes.ABB) {
 	        		    		abb.inserir(compra);	        		    		
@@ -169,12 +168,10 @@ public class Main {
 	        		    	} else if (escolha == Constantes.HASHING) {
 	        		    		hashing.inserir(compra);
 	        		    	}	        				
-	        				count++;
-	        				System.out.println(String.valueOf(count));
 	        			}      					        			
 	                	gravarContaArvore(escolha, compras, caminhoProcessado, abb, avl, hashing);          
 	                }     	        		
-        		} 
+        		}
         		
         		tempoFinal = System.currentTimeMillis();
         		System.out.print(" -> Arquivo: " + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + ".txt");
@@ -201,32 +198,32 @@ public class Main {
     		List<String> cpfsCompra = Files.readAllLines(Paths.get(Constantes.CAMINHO_TESTE + "compra.txt"));
     		
     		GravarArquivo saida = new GravarArquivo(caminhoArquivo);
-    		cpfsCompra.forEach( cpf -> {
-    			Compra compra = null; 					
+    		
+    		if (escolha == Constantes.ABB) {
+    			abb.balancear(); 
+    		}
+    		
+    		cpfsCompra.forEach( cpf -> {				
     			if (escolha == Constantes.ABB) {
-        			abb.balancear(); 
-        			NoAbb noAbb = null;  	
-        			noAbb = abb.pesquisar(cpf);
+        			NoAbb noAbb = abb.pesquisar(cpf);
         			if (noAbb == null) {
 						saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf); 
 					} else {
-						saida.gravar(compra.toString() + "\n"); 
+						saida.gravar(noAbb.toString() + "\n"); 
 					}
     	    	} else if (escolha == Constantes.AVL) {
-    	    		NoAvl noAvl = null;
-    	    		noAvl = avl.pesquisar(cpf);
+    	    		NoAvl noAvl = avl.pesquisar(cpf);
     	    		if (noAvl == null) {
 						saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf); 
 					} else {
-						saida.gravar(compra.toString() + "\n"); 
+						saida.gravar(noAvl.toString() + "\n"); 
 					}
     	    	} else if (escolha == Constantes.HASHING) {
-    	    		NoHash noHash = null;
-    	    		noHash = hashing.pesquisar(cpf);
+    	    		 NoHash noHash = hashing.pesquisar(cpf);
 					if (noHash == null) {
 						saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf); 
 					} else {
-						saida.gravar(compra.toString() + "\n"); 
+						saida.gravar(noHash.toString() + "\n"); 
 					}
     	    	}    			 			
     		});   		
