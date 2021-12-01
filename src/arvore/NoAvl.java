@@ -71,6 +71,14 @@ public class NoAvl {
 	public void setCPF(String cPF) {
 		CPF = cPF;
 	}
+	
+	public ArrayList<Compra> getLista() {
+		return lista;
+	}
+
+	public void setLista(ArrayList<Compra> lista) {
+		this.lista = lista;
+	}
 
 	public ArrayList<Compra> imprime() {
 		return this.lista;

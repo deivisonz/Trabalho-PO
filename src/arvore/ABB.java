@@ -50,8 +50,10 @@ public class ABB {
 
 	public void inserir(Compra compra) {
 		NoAbb no = pesquisar(compra.getCliente().getCpf());
-		if(no == null) {
+		if (no == null) {
 			this.raiz = inserir(compra, this.raiz);
+		} else {
+			no.getLista().add(compra);
 		}
 	}
 
@@ -60,13 +62,11 @@ public class ABB {
 			NoAbb novo = new NoAbb(compra);
 			this.nElem++;
 			return novo;
-		}else {
+		} else {
 			if(compra.getCliente().getCpf().compareTo(no.getCPF()) > 0) {
 				no.setDir(inserir(compra, no.getDir()));
-			} else if(compra.getCliente().getCpf().compareTo(no.getCPF()) < 0) {
-				no.setEsq(inserir(compra, no.getEsq()));
 			} else {
-				no.insereCompra(compra);
+				no.setEsq(inserir(compra, no.getEsq()));
 			}
 			return no;
 		}

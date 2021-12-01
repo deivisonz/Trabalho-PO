@@ -18,9 +18,10 @@ import java.util.Scanner;
 import arvore.ABB;
 import arvore.AVL;
 import arvore.Hashing;
+import arvore.NoHash;
+import constantes.Constantes;
 import arvore.NoAbb;
 import arvore.NoAvl;
-import constantes.Constantes;
 import io.GravarArquivo;
 import io.LerArquivoConta;
 import models.CadCompra;
@@ -153,21 +154,24 @@ public class Main {
 	        		
         			ABB abb = new ABB();
 	            	AVL avl = new AVL();
-	            	Hashing hashing = new Hashing(500);
+	            	Hashing hashing = new Hashing(55001);
 	        		
 	        		CadCompra compras = lerArquivo(caminho);        		
 	        		
 	        		String caminhoProcessado = Constantes.CAMINHO_PROCESSADO + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + getDescricaoArvore(escolha, true) + ".txt";        		
 	        		if (compras.getVetCompra() != null) {
-	        			compras.getVetCompra().forEach(compra -> {
+	        			int count = 0;
+	        			for (Compra compra : compras.getVetCompra()) {
 	        				if (escolha == Constantes.ABB) {
-	        		    		abb.inserir(compra);
+	        		    		abb.inserir(compra);	        		    		
 	        		    	} else if (escolha == Constantes.AVL) {
 	        		    		avl.inserir(compra);
 	        		    	} else if (escolha == Constantes.HASHING) {
 	        		    		hashing.inserir(compra);
-	        		    	}
-	        			});        					        			
+	        		    	}	        				
+	        				count++;
+	        				System.out.println(String.valueOf(count));
+	        			}      					        			
 	                	gravarContaArvore(escolha, compras, caminhoProcessado, abb, avl, hashing);          
 	                }     	        		
         		} 
@@ -201,19 +205,30 @@ public class Main {
     			Compra compra = null; 					
     			if (escolha == Constantes.ABB) {
         			abb.balancear(); 
-        			compra = abb.pesquisar(cpf).getCompra();      			
+        			NoAbb noAbb = null;  	
+        			noAbb = abb.pesquisar(cpf);
+        			if (noAbb == null) {
+						saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf); 
+					} else {
+						saida.gravar(compra.toString() + "\n"); 
+					}
     	    	} else if (escolha == Constantes.AVL) {
-    	    		compra = avl.pesquisar(cpf).getCompra();
+    	    		NoAvl noAvl = null;
+    	    		noAvl = avl.pesquisar(cpf);
+    	    		if (noAvl == null) {
+						saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf); 
+					} else {
+						saida.gravar(compra.toString() + "\n"); 
+					}
     	    	} else if (escolha == Constantes.HASHING) {
-    	    		compra = hashing.pesquisar(cpf);
-    	    	}   
-    			
-    			if (compra == null) {
-    				saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf); 
-    			} else {
-    				saida.gravar(compra.toString() + "\n"); 
-    			}
-    			 			
+    	    		NoHash noHash = null;
+    	    		noHash = hashing.pesquisar(cpf);
+					if (noHash == null) {
+						saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf); 
+					} else {
+						saida.gravar(compra.toString() + "\n"); 
+					}
+    	    	}    			 			
     		});   		
 
             saida.fechar();
@@ -240,5 +255,19 @@ public class Main {
 	        default: throw new InvalidParameterException("ERRO: Opção informada inválida");
     	}
     }
+    
+    private static int numeroPrimo(int numero) {
+		if (numero == 500) {
+			return 557;
+		} else if (numero == 5000) {
+			return 5501;
+		} else if (numero == 1000) {
+			return 1103;
+		} else if (numero == 10000) {
+			return 11003;
+		} else {
+			return 55001;
+		}		
+	}
     
 }

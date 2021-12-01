@@ -15,11 +15,7 @@ public class AVL {
 	}
 
 	public boolean eVAzia() {
-		if (this.raiz == null) {
-			return true;
-		} else {
-			return false;
-		}
+		return this.raiz == null;
 	}
 
 	public NoAvl getRaiz() {
@@ -51,6 +47,8 @@ public class AVL {
 		NoAvl no = pesquisar(compra.getCliente().getCpf());
 		if (no == null) {
 			this.raiz = this.inserir(compra, this.raiz);
+		} else {
+			no.getLista().add(compra);
 		}
 	}
 
