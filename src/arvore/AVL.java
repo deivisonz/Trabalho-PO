@@ -114,7 +114,7 @@ public class AVL {
 			temp1.setDir(no);
 			no.setFb((byte)0);
 			no = temp1;
-		} else {
+		} else if (temp1.getDir() != null) {
 			temp2 = temp1.getDir();
 			temp1.setDir(temp2.getEsq());
 			temp2.setEsq(temp1);

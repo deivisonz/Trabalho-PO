@@ -130,7 +130,7 @@ public class Main {
 	        		String caminho = Constantes.CAMINHO_TESTE + "compra" + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + ".txt";           		      		
 	        		CadCompra compras = lerArquivo(caminho);        		
 	        		
-	        		String caminhoProcessado = Constantes.CAMINHO_PROCESSADO + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + getDescricaoOrdenacao(escolha, true) + ".txt";        		
+	        		String caminhoProcessado = Constantes.CAMINHO_PROCESSADO_ETAPA_1 + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + getDescricaoOrdenacao(escolha, true) + ".txt";        		
 	        		if (compras.getVetCompra() != null) {	        			
 	        			caseOrdenar(compras, escolha);         			    			
 	                	gravarConta(compras, caminhoProcessado);          
@@ -159,7 +159,7 @@ public class Main {
 	            	AVL avl = new AVL();
 	            	Hashing hashing = new Hashing(numeroPrimo(compras.getVetCompra().size()));
 	        		
-	        		String caminhoProcessado = Constantes.CAMINHO_PROCESSADO + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + getDescricaoArvore(escolha, true) + ".txt";        		
+	        		String caminhoProcessado = Constantes.CAMINHO_PROCESSADO_ETAPA_2 + Constantes.NOME_ARQUIVO[i] + Constantes.TIPO_ARQUIVO[j] + getDescricaoArvore(escolha, true) + ".txt";        		
 	        		if (compras.getVetCompra() != null) {
 	        			for (Compra compra : compras.getVetCompra()) {
 	        				if (escolha == Constantes.ABB) {
@@ -237,8 +237,8 @@ public class Main {
     }
     
     private static void gravarCpfSemCompra(GravarArquivo saida, String cpf) {
-    	saida.gravar("CPF " + cpf + ":\n");
-		saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf + "\n\n"); 
+    	saida.gravar("CPF " + cpf);
+		saida.gravar(": NÃO HÁ NENHUMA COMPRA PARA ESTE CPF\n\n"); 
     }
     
     private static String getDescricaoOrdenacao(int escolha, boolean abreviado) {
