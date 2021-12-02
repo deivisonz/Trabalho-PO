@@ -6,109 +6,113 @@ import models.Compra;
 
 public class AVL {
 	private NoAvl raiz;
-	private boolean h;
 	private int nElem;
+	private boolean h;
 
-	public AVL() {
-		this.raiz = null;
-		this.h = true;
+	public AVL() { 
+		nElem=0; 
+		raiz = null; 
+		h = true; 
 	}
 
-	public boolean eVAzia() {
-		return this.raiz == null;
+	public boolean eVazia() {
+		return raiz == null;
 	}
-
+	
 	public NoAvl getRaiz() {
 		return raiz;
 	}
-
+	
 	public int getnElem() {
 		return nElem;
 	}
-
-	public NoAvl pesquisar(String elem) {
-		return pesquisar(elem, this.raiz);
+	
+	public NoAvl pesquisar (String elem) {
+		return pesquisar(elem, raiz);
 	}
-
-	public NoAvl pesquisar(String elem, NoAvl no) {
-		if (no == null) {
+	
+	private NoAvl pesquisar (String elem, NoAvl no) {
+		if (no==null) {
 			return null;
-		} else {
-			if (elem.compareTo(no.getCPF()) < 0) {
+		}else {
+			if(elem.compareTo(no.getCompra().getCliente().getCpf()) < 0 ) {
 				no = pesquisar(elem, no.getEsq());
-			} else if (elem.compareTo(no.getCPF()) > 0) {
+			} else if (elem.compareTo(no.getCompra().getCliente().getCpf()) > 0) {
 				no = pesquisar(elem, no.getDir());
 			}
 			return no;
 		}
 	}
-
-	public void inserir(Compra compra) {
+	
+	public void inserir (Compra compra) {
 		NoAvl no = pesquisar(compra.getCliente().getCpf());
 		if (no == null) {
-			this.raiz = this.inserir(compra, this.raiz);
-		} else {
-			no.getLista().add(compra);
+			raiz = inserir(compra, raiz);
+		}else {
+			no.getCPFIgual().add(compra);
 		}
 	}
-
+	
 	private NoAvl inserir(Compra compra, NoAvl no) {
-		if (no == null) {
+		if(no == null) {
 			NoAvl novo = new NoAvl(compra);
-			this.nElem++;
-			this.h = true;
+			nElem++;
+			h = true;
 			return novo;
-		} else if (compra.getCliente().getCpf().compareTo(no.getCPF()) < 0) {
-			no.setEsq(this.inserir(compra, no.getEsq()));
-			no = this.balancearDir(no);
-		} else if (compra.getCliente().getCpf().compareTo(no.getCPF()) > 0) {
-			no.setDir(this.inserir(compra, no.getDir()));
-			no = this.balancearEsq(no);
-		} else {
-			no.insereCompra(compra);
+		}else {
+			if(compra.getCliente().getCpf().compareTo(no.getCompra().getCliente().getCpf()) < 0) {
+				no.setEsq(inserir(compra, no.getEsq()));
+				no = balancearDir(no);
+			}else {
+				no.setDir(inserir(compra, no.getDir()));
+				no = balancearEsq(no);
+			}
+			return no;
+		}
+	}
+	
+	private NoAvl balancearDir(NoAvl no) {
+		if (h) {
+			switch (no.getFb()) {
+			case 1:
+				no.setFb((byte)0);
+				h = false;
+				break;
+			case 0:
+				no.setFb((byte)-1);
+				break;
+			case -1:
+				no = rotacaoDireita(no);
+			}
 		}
 		return no;
 	}
-
-	private NoAvl balancearDir(NoAvl no) {
-		if (this.h)
-			switch (no.getFb()) {
-			case 1:
-				no.setFb((byte) 0);
-				this.h = false;
-				break;
-			case 0:
-				no.setFb((byte) -1);
-				break;
-			case -1:
-				no = this.rotacaoDireita(no);
-			}
-		return no;
-	}
-
+	
 	private NoAvl balancearEsq(NoAvl no) {
-		if (this.h)
+		if (h) {
 			switch (no.getFb()) {
 			case -1:
-				no.setFb((byte) 0);
-				this.h = false;
+				no.setFb((byte)0);
+				h = false;
 				break;
 			case 0:
-				no.setFb((byte) -1);
+				no.setFb((byte)-1);
 				break;
 			case 1:
-				no = this.rotacaoEsquerda(no);
+				no = rotacaoEsquerda(no);
 			}
+		}
 		return no;
 	}
-
+	
 	private NoAvl rotacaoDireita(NoAvl no) {
 		NoAvl temp1, temp2;
 		temp1 = no.getEsq();
+		
 		if (temp1.getFb() == -1) {
 			no.setEsq(temp1.getDir());
 			temp1.setDir(no);
-			no.setFb((byte) 0);
+			no.setFb((byte)0);
 			no = temp1;
 		} else {
 			temp2 = temp1.getDir();
@@ -116,28 +120,34 @@ public class AVL {
 			temp2.setEsq(temp1);
 			no.setEsq(temp2.getDir());
 			temp2.setDir(no);
-			if (temp1.getFb() == -1)
+			
+			if(temp2.getFb() == -1) {
 				no.setFb((byte) 1);
-			else
+			} else {
 				no.setFb((byte) 0);
-			if (temp2.getFb() == -1)
-				temp1.setFb((byte) 1);
-			else
+			}
+			
+			 if(temp2.getFb() == 1) {
+				temp1.setFb((byte) -1);
+			} else {
 				temp1.setFb((byte) 0);
+			}
+			 
 			no = temp2;
 		}
-		no.setFb((byte) 0);
-		this.h = false;
+		
+		no.setFb((byte)0);
+		h = false;
 		return no;
 	}
-
+	
 	private NoAvl rotacaoEsquerda(NoAvl no) {
 		NoAvl temp1, temp2;
 		temp1 = no.getDir();
-		if (temp1.getFb() == -1) {
+		if (temp1.getFb() == 1) {
 			no.setDir(temp1.getEsq());
 			temp1.setEsq(no);
-			no.setFb((byte) 0);
+			no.setFb((byte)0);
 			no = temp1;
 		} else {
 			temp2 = temp1.getEsq();
@@ -145,42 +155,47 @@ public class AVL {
 			temp2.setDir(temp1);
 			no.setDir(temp2.getEsq());
 			temp2.setEsq(no);
-			if (temp1.getFb() == -1)
-				no.setFb((byte) 1);
-			else
+			
+			if (temp2.getFb() == 1) {
+				no.setFb((byte) -1);
+			} else {
 				no.setFb((byte) 0);
-			if (temp2.getFb() == -1)
+			}
+			
+			if (temp2.getFb() == -1) {
 				temp1.setFb((byte) 1);
-			else
+			} else {
 				temp1.setFb((byte) 0);
+			}
 			no = temp2;
 		}
-		no.setFb((byte) 0);
-		this.h = false;
+		
+		no.setFb((byte)0);
+		h = false;
 		return no;
 	}
-
-	public ArrayList<NoAvl> CamCentral() {
+	
+	public ArrayList<NoAvl> CamCentral(){
 		ArrayList<NoAvl> vetor = new ArrayList<NoAvl>(this.nElem);
-		return (fazCamCentral(vetor, this.raiz));
+		return fazCamCentral(vetor, raiz);
 	}
-
-	private ArrayList<NoAvl> fazCamCentral(ArrayList<NoAvl> vetor, NoAvl no) {
-		if (no != null) {
+	
+	private ArrayList<NoAvl> fazCamCentral(ArrayList<NoAvl> vetor, NoAvl no){
+		if(no!=null) {
 			vetor = fazCamCentral(vetor, no.getEsq());
 			vetor.add(no);
 			vetor = fazCamCentral(vetor, no.getDir());
 		}
 		return vetor;
 	}
-
+	
 	public String imprime() {
 		ArrayList<NoAvl> vetor = CamCentral();
 		String temp = "";
-		for (NoAvl no : vetor) {
-			temp += no.getCompra().getCliente().getCpf() + " | ";
+		for(NoAvl no : vetor) {
+			temp += no.getCompra().getCliente().getCpf()+ " | ";
 		}
 		return temp;
 	}
-
+	
 }

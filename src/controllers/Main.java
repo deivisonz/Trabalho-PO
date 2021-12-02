@@ -86,6 +86,7 @@ public class Main {
         	ordernarArvore(Constantes.ABB, iteracoes);
         	ordernarArvore(Constantes.AVL, iteracoes);
         	ordernarArvore(Constantes.HASHING, iteracoes);
+        	System.out.println("\n\n-------------------------- FIM -------------");
         }
 
     }
@@ -179,6 +180,7 @@ public class Main {
         		
         	}         	
         }    	
+    	
     }        
     
     private static void gravarConta(CadCompra compras, String caminhoArquivo) {      	
@@ -207,23 +209,23 @@ public class Main {
     			if (escolha == Constantes.ABB) {
         			NoAbb noAbb = abb.pesquisar(cpf);
         			if (noAbb == null) {
-						saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf); 
+        				gravarCpfSemCompra(saida, cpf);
 					} else {
-						saida.gravar(noAbb.toString() + "\n"); 
+						saida.gravar(noAbb.toString()); 
 					}
     	    	} else if (escolha == Constantes.AVL) {
     	    		NoAvl noAvl = avl.pesquisar(cpf);
     	    		if (noAvl == null) {
-						saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf); 
+    	    			gravarCpfSemCompra(saida, cpf);
 					} else {
-						saida.gravar(noAvl.toString() + "\n"); 
+						saida.gravar(noAvl.toString()); 
 					}
     	    	} else if (escolha == Constantes.HASHING) {
     	    		 NoHash noHash = hashing.pesquisar(cpf);
 					if (noHash == null) {
-						saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf); 
+						gravarCpfSemCompra(saida, cpf);
 					} else {
-						saida.gravar(noHash.toString() + "\n"); 
+						saida.gravar(noHash.toString()); 
 					}
     	    	}    			 			
     		});   		
@@ -232,6 +234,11 @@ public class Main {
         } catch (IOException e) {
         	System.out.println("ERRO " + e.getMessage());
         }
+    }
+    
+    private static void gravarCpfSemCompra(GravarArquivo saida, String cpf) {
+    	saida.gravar("CPF " + cpf + ":\n");
+		saida.gravar("\nNÃO HÁ NENHUMA COMPRA COM O CPF " + cpf + "\n\n"); 
     }
     
     private static String getDescricaoOrdenacao(int escolha, boolean abreviado) {

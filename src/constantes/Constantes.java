@@ -1,9 +1,13 @@
 package constantes;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class Constantes {
 
 	//quantidade de elementos e tipos de arquivos
-    public static  final Integer[] NOME_ARQUIVO = {500, 1000, 5000, 10000, 50000};
+    //public static  final Integer[] NOME_ARQUIVO = {500, 1000, 5000, 10000, 50000};
+	public static  final Integer[] NOME_ARQUIVO = {500, 1000};
 	public static final String[] TIPO_ARQUIVO = {"alea", "inv", "ord"};	
 	
 	//localização-destino de pastas dos arquivos
@@ -29,7 +33,7 @@ public class Constantes {
 	public static final int ETAPA_DOIS_METODOS_PESQUISA = 2;
 	
 	//iteracoes padrões para gravação de tempo ordenação
-	public static final int QUANTIDADE_ITERACOES_PADRAO = 4;
+	public static final int QUANTIDADE_ITERACOES_PADRAO = 1;
 	
 	//Posicao informação nos arquivo de texto	
 	public static final int NOME_CLIENTE = 0;
@@ -47,6 +51,8 @@ public class Constantes {
 	public static final int DIA = 0;
 	public static final int MES = 1;
 	public static final int ANO = 2;
+	
+	public static final DateFormat FORMATO_DATA = new SimpleDateFormat("dd/MM/yyyy");
 	
 	
 

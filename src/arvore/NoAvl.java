@@ -1,33 +1,40 @@
 package arvore;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import constantes.Constantes;
 import models.Compra;
 
 public class NoAvl {
-
-	private byte fb;
-	private String CPF;
-	private ArrayList<Compra> lista; 
-	private NoAvl esq, dir;
 	private Compra compra;
-	
-	//Construtores
-	public NoAvl(Compra compra) {
-		super();
-		this.lista = new ArrayList<Compra>();
-		this.lista.add(compra);
-		this.CPF = compra.getCliente().getCpf();
-		this.fb = 0;
-	}
+	private NoAvl dir;
+	private NoAvl esq;
+	private ArrayList<Compra> lista;
+	private byte fb;
 	
 	public NoAvl() {
-		super();
-		this.compra = null;
-		this.fb = 0;
+		compra = null;
+		lista = new ArrayList<Compra>();
+		fb = 0;
 	}
 
-	//Getters and Setters
+	public NoAvl(Compra compra) {
+		this.compra = compra;
+		lista = new ArrayList<Compra>();
+		lista.add(compra);
+		fb = 0;
+	}
+	 
+	public NoAvl(Compra compra, NoAvl dir, NoAvl esq, ArrayList<Compra> cPfIgual, byte fb) {
+		this.compra = compra;
+		this.dir = dir;
+		this.esq = esq;
+		this.lista = cPfIgual;
+		this.fb = fb;
+	}
+	
 	public byte getFb() {
 		return fb;
 	}
@@ -36,12 +43,12 @@ public class NoAvl {
 		this.fb = fb;
 	}
 
-	public Compra getCompra() {
-		return compra;
+	public NoAvl getDir() {
+		return dir;
 	}
 
-	public void setCompra(Compra compra) {
-		this.compra = compra;
+	public void setDir(NoAvl dir) {
+		this.dir = dir;
 	}
 
 	public NoAvl getEsq() {
@@ -52,42 +59,39 @@ public class NoAvl {
 		this.esq = esq;
 	}
 
-	public NoAvl getDir() {
-		return dir;
-	}
-
-	public void setDir(NoAvl dir) {
-		this.dir = dir;
-	}
-	
-	public void insereCompra(Compra compra) {
-		this.lista.add(compra);
-	}
-		
-	public String getCPF() {
-		return CPF;
-	}
-
-	public void setCPF(String cPF) {
-		CPF = cPF;
-	}
-	
-	public ArrayList<Compra> getLista() {
+	public ArrayList<Compra> getCPFIgual() {
 		return lista;
 	}
 
-	public void setLista(ArrayList<Compra> lista) {
-		this.lista = lista;
+	public void setCPFIgual(ArrayList<Compra> cPfIgual) {
+		this.lista = cPfIgual;
 	}
 
-	public ArrayList<Compra> imprime() {
-		return this.lista;
+	public Compra getCompra() {
+		return compra;
 	}
 	
-	public String ToString() {
-		return ""+this.compra.getCliente().getCpf();
+	public double getTotal() {
+		double total = 0;
+		for(Compra compra: lista) {
+			total += compra.getValor();
+		}
+		return total;
 	}
+
+	@Override
+	public String toString() {
+		String temp = "CPF "+ compra.getCliente().getCpf() + " \t NOME " + compra.getCliente().getNome() +"\n";
+		for(Compra compra : lista) {
+			temp += "data: " + Constantes.FORMATO_DATA.format(compra.getData().getTime()) + " \t valor: R$" + compra.getValor() + "\n";
+		}
+		temp += "Total: R$" + String.format("%.2f", getTotal()) + "\n\n";
+		return temp;
+	}	
 	
-		
+	
+	 
+	
+	 
+	 
 }
-

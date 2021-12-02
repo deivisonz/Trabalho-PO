@@ -2,6 +2,7 @@ package arvore;
 
 import java.util.ArrayList;
 
+import constantes.Constantes;
 import models.Compra;
 
 public class NoHash {
@@ -39,6 +40,15 @@ public class NoHash {
 		}
 		return total;
 	}
-	 
+	
+	@Override
+	public String toString() {
+		String temp = "CPF "+ compra.getCliente().getCpf() + " \t NOME " + compra.getCliente().getNome() +"\n";
+		for(Compra compra : lista) {
+			temp += "data: " + Constantes.FORMATO_DATA.format(compra.getData().getTime())+ " \t valor: R$" + compra.getValor() + "\n";
+		}
+		temp += "Total: R$" + String.format("%.2f", getTotal()) + "\n\n";
+		return temp;
+	}
 	 
 }
