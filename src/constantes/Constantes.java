@@ -1,5 +1,8 @@
 package constantes;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class Constantes {
 
 	//quantidade de elementos e tipos de arquivos
@@ -8,7 +11,8 @@ public class Constantes {
 	
 	//localização-destino de pastas dos arquivos
 	public static final String CAMINHO_TESTE = "src\\arquivos\\";
-	public static final String CAMINHO_PROCESSADO = "src\\arquivos\\processado\\";
+	public static final String CAMINHO_PROCESSADO_ETAPA_1 = "src\\arquivos\\processado\\ETAPA_1\\";
+	public static final String CAMINHO_PROCESSADO_ETAPA_2 = "src\\arquivos\\processado\\ETAPA_2\\";
 	public static final String CAMINHO_RELATORIO = "src\\relatorio\\";
 	
 	//escolhas menu principal
@@ -18,6 +22,18 @@ public class Constantes {
 	public static final int SHELLSORT = 4;
 	public static final int QUICKSORT_COM_INSERCAO = 5;
 	public static final int SAIR = 6;
+	
+	//escolhas arvores menu principal
+	public static final int ABB = 2;
+	public static final int AVL = 3;
+	public static final int HASHING = 4;
+		
+	//etapas
+	public static final int ETAPA_UM_METODOS_ORDENACAO = 1;
+	public static final int ETAPA_DOIS_METODOS_PESQUISA = 2;
+	
+	//iteracoes padrões para gravação de tempo ordenação
+	public static final int QUANTIDADE_ITERACOES_PADRAO = 1;
 	
 	//Posicao informação nos arquivo de texto	
 	public static final int NOME_CLIENTE = 0;
@@ -35,6 +51,8 @@ public class Constantes {
 	public static final int DIA = 0;
 	public static final int MES = 1;
 	public static final int ANO = 2;
+	
+	public static final DateFormat FORMATO_DATA = new SimpleDateFormat("dd/MM/yyyy");
 	
 	
 
